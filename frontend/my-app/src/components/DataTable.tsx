@@ -31,6 +31,8 @@ export default function DataTable() {
   const [pageEndingRecord, setPageEndingRecord]=useState<number>(0);
   const [totalPage, setTotalPage]=useState<number>(0);
 
+  const [token, setToken]=useState<string|null>(null);
+
   const handleRowsCount=(event:ChangeEvent<HTMLSelectElement>)=>{
     setRowCount(event.target.value);
     setPage(0);
@@ -53,9 +55,17 @@ export default function DataTable() {
     return ()=>clearTimeout(interval);
   },[searchValues])
 
+  useEffect(()=>{
+    setToken(localStorage.getItem("token"));
+  },[token]);
+
   async function fetchProduct(searchValues:string, rowsPerPage:string, page:number){
     // toast.success("first render")
-    const res=await axios.get(`${base_url}/get-products`, {params:{searchValues, rowsPerPage, sortField, sortBy, page}});
+    const res=await axios.get(`${base_url}/get-products`, {
+      headers:{
+        Authorization: `Bearer ${token}`
+      },
+      params:{searchValues, rowsPerPage, sortField, sortBy, page}});
     // console.log(res.data.totalCount)
     setTotalRecords(res.data.totalCount);
     setPageStartingRecord(res.data.startingRecordNumber);

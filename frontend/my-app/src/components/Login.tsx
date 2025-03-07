@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { base_url } from "../constants/links";
+
 
 export default function Login() {
 
@@ -23,7 +25,7 @@ export default function Login() {
         const username=formData.get("username");
         const password=formData.get("userPassword");
         try{
-          const response=await axios.post("http://localhost:3000/api/login", {username, password});
+          const response=await axios.post(`${base_url}/login`, {username, password});
           localStorage.setItem("token", response.data.token);
           // console.log(response.data.data);
           if (response.data.role==="ADMIN"){

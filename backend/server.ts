@@ -2,6 +2,7 @@ import express from "express";
 import router from "./routes/route";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import swaggerDocs from "./config/swagger";
 
 const app=express();
 
@@ -17,6 +18,7 @@ app.get("/", (req, res)=>{
     res.send("Ok");
 });
 
-app.listen(3000, ()=>{
-    console.log("App listening on port 3000");
+app.listen(3001, ()=>{
+    swaggerDocs(app, 3001)
+    console.log("App listening on port 3001");
 });

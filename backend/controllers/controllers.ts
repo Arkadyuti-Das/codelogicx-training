@@ -179,6 +179,7 @@ export const createProduct=async(req:Request, res:Response, next:NextFunction)=>
 }
 
 export const getProducts=async(req:Request, res:Response)=>{
+    console.log("the user is",req.user);
     const {searchValues="", rowsPerPage="1", sortField="name", sortBy="asc", page=0}=req.query;
     // console.log("query params:", queryParams);
     const takevalue=parseInt(rowsPerPage as string);
